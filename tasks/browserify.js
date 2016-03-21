@@ -10,6 +10,7 @@ var path = require('path');
 var async = require('async');
 var browserify = require('browserify');
 var watchify = require('watchify');
+var log = require('debug')('grunt-browserify:tasks');
 
 module.exports = Task;
 
@@ -28,14 +29,17 @@ function Task (grunt) {
 }
 
 Task.runTask = function (grunt, options, file, next) {
+  log('runTask using options=', options);
   var runner = new Runner({
     writer: grunt.file,
     logger: grunt,
     browserify: browserify,
     watchify: watchify
   });
+  log('runTask file glob=', file);
   var files = grunt.file.expand({filter: 'isFile'}, file.src).map(function (f) {
     return path.resolve(f);
   });
+  log('runTask expanded file list=', files && files.sort().join(', '));
   runner.run(files, file.dest, options, next);
 };

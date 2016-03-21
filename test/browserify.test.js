@@ -204,7 +204,6 @@ describe('grunt-browserify-runner', function () {
     });
 
     it('specifies the provided alias for each item in the object', function (done) {
-      console.log(Object.keys(aliasObj));
       runner.run([], dest, {alias: aliasObj}, function () {
         assert.ok(b().require.calledWith(aliasObj['alias'], {expose: 'alias'}));
         assert.ok(b().require.calledWith(aliasObj['pathAlias'], {expose: 'pathAlias'}));
